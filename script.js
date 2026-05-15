@@ -358,12 +358,18 @@ const images = [];
 const imageSeq = {
   frame: 0,
 };
-for (let i = 0; i < frameCount; i++) {
-  const img = new Image();
+let loadedCount = 0;
 
-  img.src = files(i);
-  img.onload = () => {
-    if (i === 1) render();
+for (let i = 0; i < frameCount; i++) {
+const img = new Image();
+img.src = files(i);
+
+img.onload = () => {
+  loadedCount++;
+
+  if (loadedCount === frameCount) {
+    render(); // start animation only after all images load
+    }
   };
 
   images.push(img);
